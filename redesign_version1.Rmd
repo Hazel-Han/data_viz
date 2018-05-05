@@ -3,16 +3,24 @@
 
 ## Finding 1: Revision of "Rate of Firearm Homicide Deaths, 1981-2010"
 The original graph demonstrates the rate of firearm deaths from 1981 to 2010. 
+
 ![](images/firearm_homicide_deaths.png)
+
 The following graph is a revision that shows the breakdown of homicide firearm, violence-related (homicide and suicide) and unintentional death rate from 1981 to 2010. 
+
 ![](images/homcide_deaths.png)
 
 ### Development Process
 Data source: Centers for Disease Control and Prevention
-Fatal Injury Reports, 1981 to 1998 (ICD-9), National, Regional and State 
+
+Fatal Injury Reports, 1981 to 1998 (ICD-9), National, Regional and State
+
 Fatal Injury Reports, 1999 to 2016 (ICD-10), National and Regional 
+
 Retrieved from https://webappa.cdc.gov/sasweb/ncipc/mortrate.html
+
 Data cleaning: R
+
 Data visualization: R (ggplot)
 
 ### Data Wrangling Steps
