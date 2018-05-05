@@ -1,6 +1,5 @@
-## Tianmin Li
 ## First Version "Redesign"
-
+## Tianmin Li
 ## Finding 1: Revision of "Rate of Firearm Homicide Deaths, 1981-2010"
 The original graph demonstrates the rate of firearm deaths from 1981 to 2010. 
 
