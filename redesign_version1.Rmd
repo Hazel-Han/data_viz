@@ -180,7 +180,7 @@ Export Data for Visualization in Tableau
 ```{r}
 write.csv(gun_combined, file = "gun_combined.csv")
 ```
-### Reasons
+### Reasoning
 The original plot is not straight forward in terms of readiness. It is really hard to understand what the bars are showing and how to compare the four bars. Further, showing the highest/lowest gun ownership states are not convincing as these states can just be outliers. To tackle these two problems, all states' gun ownership vs. gun suicide rate are displayed in the revised plot.  
 
 ### Detour
