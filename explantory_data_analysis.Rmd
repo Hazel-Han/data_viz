@@ -7,6 +7,7 @@ This project is looking at college education related data to see how college edu
 2. What are the most popular college majors across gender and race over years?
 3. What are the most lucrative majors over years?
 4. What are the relationship between college majors and occupations?
+5. How does college admission vary across states?
 
 Data used for the projects come from US Census Bureau and National Center for Education Statistics. This document is the exploratory data analysis that helps understand the datasets being used. 
 
@@ -23,28 +24,9 @@ Last we are interested in realtionships between college and occupations, here we
 Except variables mentioned above, we also included variable like 'ADJINC', means adjustment factor for income and earnings dollar amounts which helps us capture income more precisely,taking inflation into consideration; 'SCH','SCHG' and 'SCHL' help us segment people by with or without college experience, also college catagory; 'CITWP' which means if people were naturalized and when, we would like to see relation between immigration and major choice also its effect to state enrollment; 'COW' which stands by worker catgory, we think different major may lead to different work class. 
 
 Here is a table of variable description.
-```{r}
-name = names(edu_clear)
-st = 'State Code based on 2010 Census definitions'
-adjinc = 'Adjustment factor for income and earnings dollar amounts (6 implied decimal places)'
-fod1p = 'Recoded field of degree - first entry'
-sch = 'School enrollment'
-schg = 'Grade level attending'
-schl = 'Educational attainment'
-indp = 'Industry recode based on 2012 IND codes'
-naicsp = 'NAICS Industry code based on 2012 NAICS codes'
-sex = 'sex'
-rac1p = 'Recoded detailed race code'
-pincp = "Total person's income (signed)"
-agep = 'age'
-citwp = 'Year of naturalization write-in'
-cow = 'Class of worker'
-serialno = 'Housing unit/GQ person serial number'
-des = c(st,adjinc,fod1p,sch,schg,schl,indp,naicsp,sex,rac1p,pincp,agep,citwp,cow,serialno)
-library(DT)
-des_table = datatable(cbind(name,des))
-des_table
-```
+
+![](images/acs_description.png)
+
 ### 2.1.3 Data Cleaning and Integration
 Read and Combine Raw Data
 ```{r}
@@ -96,25 +78,17 @@ sum(is.na(admin$APPLCN) == T)
 sum(is.na(admin$ADMSSN) == T)
 sum(is.na(admin$ENRLT) == T)
 adm = admin[,c("UNITID","APPLCN","ADMSSN","ENRLT")]
-adm_location = merge(adm, code, by.x = "UNITID", by.y = "code")
+adm_location = merge(adm, code, by.x = "UNITID", by.y = "V1")
 adm_location = na.omit(adm_location)
 ```
 Here is a table of variable description.
-```{r}
-name = names(adm_location)
-UNITID = 'Unique identification number of the institution used by the NCES'
-APPLCN = 'Total number of applicants for each university'
-ADMSSN = 'Total number of admissions provided by each university'
-ENRLT = 'Total number of enrollments for each university'
-des = c(UNITID,APPLCN,ADMSSN,ENRLT)
-library(DT)
-des_table = datatable(cbind(name,des))
-des_table
-```
+
+![](images/acs_description.png)
+
 ### 2.2.3 Data Cleaning and Integration
 To see the pattern of applications, admissions and enrollments in each state, we aggregate the individual university data into a state-level one. And we also create two variables representing the admission rate and enrollment rate for each state. 
 ```{r}
-adm_state = aggregate(adm_location[,c("APPLCN", "ADMSSN", "ENRLT")], by=list(adm_location$state), FUN=sum, na.rm=TRUE)
+adm_state = aggregate(adm_location[,c("APPLCN", "ADMSSN", "ENRLT")], by=list(adm_location$V4), FUN=sum, na.rm=TRUE)
 names(adm_state)[1]<-"STATE"
 adm_state$ADMRATE = adm_state$ADMSSN / adm_state$APPLCN
 adm_state$ENRRATE = adm_state$ENRLT / adm_state$ADMSSN
@@ -125,10 +99,16 @@ adm_state$ENRRATE = adm_state$ENRLT / adm_state$ADMSSN
 ```{r}
 dim(census)
 ```
+
+![](images/dim.png)
+
 For this dataset, we have 3489070 rows of data with 16 potential variables to be used.
 ```{r}
 summary(census)
 ```
+
+![](images/summary.png)
+
 The descriptive data showed in the summary table looks normal for most variables. SCHG variable has an extremely high rate of missing value, which might affect our ability to identify whether this person has a bachelor's degree or a master or above. Alternatively, we can use the variable in SCHL to help make a conclusion. Variable INDP and COW also have certain amount of missing values. These two variables are related to job and industry and could potentially affect the result of our research question on the relationship between college education and job.
 
 Variable State
@@ -136,18 +116,27 @@ Variable State
 library(ggplot2)
 ggplot(census, aes(x=stusps)) + geom_bar(aes(y = ..count..))+ labs(x='state', y = 'count')
 ```
+
+![](images/state_distribution.png)
+
 The distribution of responders count by state looks good. The variance among states is because of the nature of the ACS data, which is propotional to the state population. 
 
 Variable Sex
 ```{r}
 ggplot(census, aes(x=SEX)) + geom_bar(aes(y = ..count..))+ labs(x='gender', y = 'count')+ scale_x_discrete(limits=c(1, 2), labels=c("male", "female"))
 ```
+
+![](images/gender_dis.png)
+
 Female and Male are distributed evenly. 
 
 Variable Race
 ```{r}
 ggplot(census, aes(x=RAC1P)) + geom_bar(aes(y = (..count..)/sum(..count..)))+ labs(x='race', y = 'count')+ scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9), labels=c("White", "Black","American Indian", "Alaska Native", "American Indian and Alaska Native", "Asian", "Pacific Islander", "Some Other Race", "Two or More Races"))
 ```
+
+![](images/race_dis.png)
+
 The graph is giving us a general picture that some races are having very small data. To better understand how small it is, we table the frequency by race. 
 ```{r}
 library(dplyr)
@@ -156,41 +145,66 @@ census %>%
   summarise (n = n()) %>%
   mutate(freq = n / sum(n))
 ```
+
+![](images/race_table.png)
+
 We see that white respondent are dominent, and that other races are having much lower data than it's proportion in US, especially for Alaska Native, American Indian and Alaska Native and Pacific Islander This could create a problem when we do anaylysis by race. Potentially we can combine some of groups together. 
 
 Variable Ajusted Income
 ```{r}
-hist(census$income_2016, breaks = 80)
+hist(census$income_2016, breaks = 80, xlab="adjusted income", main="Distribution of Income")
 ```
+
+![](images/income_dis.png)
+
 Variable Age
 ```{r}
-hist(census$AGEP)
+hist(census$AGEP, xlab="age", main="Distribution of Age")
 ```
+
+![](images/age_dis.png)
+
 The age distribution looks normal with the majority of responders' age betwen 25 to 65. This is beneficial because the majority age range are people who already graduated from college and this helps to analyze the relationship between college education and occupation, as well as college education and income.
 
 Variable College Attending Year
 ```{r}
-hist(census$college_year)
+hist(census$college_year, xlab="college year", main="Distribution of College Year")
 ```
+
+![](images/college_dis.png)
+
 The college attendending distribution looks good. The graph is showing that as year goes by, there are more people attending college. There is a drop from 2010 but that is consistent with age distribution where younger people is taking up a small portion of data.
 
 Variable State and Average Income
 ```{r}
 ggplot(census, aes(x=stusps, y=income_2016)) + stat_summary(fun.y="mean", geom="bar") + labs(x='state', y = 'average income')
+
 ```
+
+![](images/state_income.png)
+
 Variable Age and Average Income
 ```{r}
 ggplot(census, aes(x=AGEP, y=income_2016)) + stat_summary(fun.y="mean", geom="bar") + labs(x='age', y = 'average income')
 ```
+
+![](images/age_income.png)
+
 Variable Sex and Average Income
 ```{r}
 ggplot(census, aes(x=SEX, y=income_2016)) + stat_summary(fun.y="mean", geom="bar") + scale_x_discrete(limits=c(1, 2), labels=c("male", "female")) + labs(x='gender', y = 'average income')
 ```
+
+![](images/gender_income.png)
+
 Variable Race and Average Income
 ```{r}
 ggplot(census, aes(x=RAC1P, y=income_2016)) + stat_summary(fun.y="mean", geom="bar") + scale_x_discrete(limits=c(1, 2,3,4,5,6,7,8,9), labels=c("White", "Black","American Indian", "Alaska Native", "American Indian and Alaska Native", "Asian", "Pacific Islander", "Some Other Race", "Two or More Races")) + labs(x='Race', y = 'average income')
 ```
-The above graphs are showing the relationships of state, age, sex and race with income. There aren't much outstanding issues that we need to pay special attention to. 
+
+![](images/race_income.png)
+
+The above graphs are showing the relationships of state, age, sex and race with income. There aren't much outstanding issues that we need to pay special attention to. One thing we need to know is that when comparing college education to income, age, sex, state and race might be important to the income other than education alone. 
 
 ## 3.2 2016 College Admission Dataset
 Below is a summary statistics of the admission dataset. 
@@ -203,11 +217,10 @@ print(colMax)
 apply(adm_state, 2, function(x) max(x, na.rm = TRUE))
 ```
 ## 4. Limitations
-1. don't have year people attend college, very likely that people attend college later than that, will affect result
-2. the college major variable is only in 2012-2016 data, better with more data. 
-3. Data might be outdated
-4. have sampling errors.
-5. We only look at the dataset for one year now. To figure the trend of the application, admission and enrollment over years, we need to merge dataset from previous years as well. 
+1. The dataset don't have year that people attend college and thus we calculated based on an assuption that everyone is attending college at 18 years old. However, it is very likely that people attend college later than 18 years old and that will affect the accuracy of results.
+2. The college major variable only exists from ACS PUMS 2012-2016 data and this limited our sample for the analysis. 
+3. The census data have the problem of sampling errors because it is only a selective portion of the whole population. 
+4. For the admission data, we only look at the dataset for one year now. To figure the trend of the application, admission and enrollment over years, we need to merge dataset from previous years as well. 
 
 ## 5. Reference
 1. https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population
