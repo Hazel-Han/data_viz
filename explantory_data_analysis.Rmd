@@ -86,6 +86,7 @@ Here is a table of variable description.
 
 ![](images/adm_description.png)
 
+
 ### 2.2.3 Data Cleaning and Integration
 To see the pattern of applications, admissions and enrollments in each state, we aggregate the individual university data into a state-level one. And we also create two variables representing the admission rate and enrollment rate for each state. 
 ```{r}
