@@ -7,7 +7,7 @@ This project is looking at college education related data to see how college edu
 2. What are the most popular college majors across gender and race over years?
 3. What are the most lucrative majors over years?
 4. What are the relationship between college majors and occupations?
-5. How does college admission vary across states?
+5. How does college admission vary across states/universities?
 
 Data used for the projects come from US Census Bureau and National Center for Education Statistics. This document is the exploratory data analysis that helps understand the datasets being used. 
 
@@ -70,6 +70,7 @@ To understand some of the general pattern of higher education in each state, the
 
 ### 2.2.2 Data Used and Explanation
 Here we use the 2016 admission dataset to see which states are the most popular choices for applicants as well as in general, which states have the lowest admission rate. We also examine the dataset to get the states that have the highest and lowest enrollment rates. 
+Variables being used in this dataset include total number of applicants, admission and enrollment for each university. These data will help us understand how popular/competitive it is to get into certain universities and thus are included in the analysis.
 ```{r}
 library(data.table)
 admin = fread('adm2016.csv')
@@ -83,7 +84,7 @@ adm_location = na.omit(adm_location)
 ```
 Here is a table of variable description.
 
-![](images/acs_description.png)
+![](images/adm_description.png)
 
 ### 2.2.3 Data Cleaning and Integration
 To see the pattern of applications, admissions and enrollments in each state, we aggregate the individual university data into a state-level one. And we also create two variables representing the admission rate and enrollment rate for each state. 
@@ -210,12 +211,25 @@ The above graphs are showing the relationships of state, age, sex and race with 
 Below is a summary statistics of the admission dataset. 
 ```{r}
 summary(adm_state)
-row.names(adm_state) = adm_state$STATE
-which.max( adm_state[,2] )
-colMax(adm_state)
-print(colMax)
-apply(adm_state, 2, function(x) max(x, na.rm = TRUE))
 ```
+
+![](images/adm_des.png)
+
+
+```{r}
+list(max(adm_state[,"APPLCN"]), adm_state[which.max(adm_state[,"APPLCN"]), "STATE"])
+list(min(adm_state[,"APPLCN"]), adm_state[which.min(adm_state[,"APPLCN"]), "STATE"])
+list(max(adm_state[,"ADMSSN"]), adm_state[which.max(adm_state[,"ADMSSN"]), "STATE"])
+list(min(adm_state[,"ADMSSN"]), adm_state[which.min(adm_state[,"ADMSSN"]), "STATE"])
+list(max(adm_state[,"ENRLT"]), adm_state[which.max(adm_state[,"ENRLT"]), "STATE"])
+list(min(adm_state[,"ENRLT"]), adm_state[which.min(adm_state[,"ENRLT"]), "STATE"])
+list(max(adm_state[,"ADMRATE"]), adm_state[which.max(adm_state[,"ADMRATE"]), "STATE"])
+list(min(adm_state[,"ADMRATE"]), adm_state[which.min(adm_state[,"ADMRATE"]), "STATE"])
+list(max(adm_state[,"ENRRATE"]), adm_state[which.max(adm_state[,"ENRRATE"]), "STATE"])
+list(min(adm_state[,"ENRRATE"]), adm_state[which.min(adm_state[,"ENRRATE"]), "STATE"])
+```
+California has the largest number of applications, admissions and enrollments in 2016 while Micronesia, a frelly associated state of the U.S., has the lowest number of applications and admissions, with Virgin Island being the one that has the smallest number of enrollments. As for the admission rate, Wyoming has the highest admission rate of around 95%, while D.C. has the lowest. The unincorporated organized territory Puerto Rico has the highest rate of enrollment (78%) while New Hampshire has the lowest rate of only 19%.
+
 ## 4. Limitations
 1. The dataset don't have year that people attend college and thus we calculated based on an assuption that everyone is attending college at 18 years old. However, it is very likely that people attend college later than 18 years old and that will affect the accuracy of results.
 2. The college major variable only exists from ACS PUMS 2012-2016 data and this limited our sample for the analysis. 
