@@ -93,7 +93,7 @@ names(adm_state)[1]<-"STATE"
 adm_state$ADMRATE = adm_state$ADMSSN / adm_state$APPLCN
 adm_state$ENRRATE = adm_state$ENRLT / adm_state$ADMSSN
 ```
-## 3. Understanding of dataset
+## 3. Understanding Data
 ## 3.1 ACS PUMS 2012-2016
 ### Summarize Data
 ```{r}
@@ -223,11 +223,10 @@ apply(adm_state, 2, function(x) max(x, na.rm = TRUE))
 4. For the admission data, we only look at the dataset for one year now. To figure the trend of the application, admission and enrollment over years, we need to merge dataset from previous years as well. 
 
 ## 5. Reference
-1. https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population
-2. https://en.wikipedia.org/wiki/Race_and_ethnicity_in_the_United_States
-3. https://www.sdstate.edu/sites/default/files/2017-01/RS3-08.pdf
+1. Wikipedia. List of U.S. states and territories by population. Retrieved from https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population. 
+2. Wikipedia. Race and ethnicity in the United States. https://en.wikipedia.org/wiki/Race_and_ethnicity_in_the_United_States
+3. Brooks, T., Khatiwada S., Vargas J. & McCurry M. (2017).The U.S. Census Bureau and American Community Survey:Advantages, Uses, and Limitations. Retrieved from https://www.sdstate.edu/sites/default/files/2017-01/RS3-08.pdf. 
 
 ## 6. Data Retrieved
-1. https://www2.census.gov/programs-surveys/acs/data/pums/2016/5-Year/
-2. https://nces.ed.gov/ipeds/datacenter/DataFiles.aspx
-
+1. ACS PUMS data 2012 - 2016. Retrieved from https://www2.census.gov/programs-surveys/acs/data/pums/2016/5-Year/.
+2. Admission and Test Scores data. Retrieved from https://nces.ed.gov/ipeds/datacenter/DataFiles.aspx.
