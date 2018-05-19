@@ -79,11 +79,12 @@ firearm_abortion <- merge(firearm, abortion, by = "Year")
 write.csv(firearm_abortion, file = "firearm_abortion.csv")
 ```
 ### Summary
-
-
+The original graph is showing the decreasing rate of firearm homicide deaths, with a guess that some policies might impact the decrease or the deterrence of gun. The deceptive version is comparing the firearm homicide deaths to corresponding abortion rate. This is based on Levitt’s (2005) theory that the drop of crime rate is the result of legalized abortion case Roe vs. Wade in 1973. It is argued that abortion helped teenager mothers, who are very likely to give birth to criminals because of their unstable economic and social situation, to stop pregnancy, and thus less criminals are produced. In the deceptive data product, the abortion year has been adjusted by adding 20 years to show when “criminals” are grown-ups. It is clear that as the abortion rate goes up, the firearm suicide rate is going down and it is very consistent over time. To make the argument more compelling, the period of Federal Assault Weapons Ban is also shaded in the chart, which shows that the policy doesn’t really help explain the decrease and increase of firearm suicide. 
 ## Roadmap
-1. change color to make it more appealing
-2. Add more documentation to the graph , add data labels necessary 
+1. Change colors of the graphs to make them more appealing to audience.
+2. Add more documentation to the charts to make it more self-explanatory.
+3. Add data labels if necessary.
 ## Reference
-Lopez G. (2017). America's unique gun violence problem, explained in 17 maps and charts. Retrieved from https://www.vox.com/policy-and-politics/2017/10/2/16399418/us-gun-violence-statistics-maps-charts. 
+1. Levitt, S. D., & Dubner, S. J. (2005). Freakonomics: A rogue economist explores the hidden side of everything. New York: William Morrow.
+2. Lopez G. (2017). America's unique gun violence problem, explained in 17 maps and charts. Retrieved from https://www.vox.com/policy-and-politics/2017/10/2/16399418/us-gun-violence-statistics-maps-charts. 
 
