@@ -7,6 +7,7 @@ Gun issue has been a controversial issue in US for a long time. Vox created a da
 ## Finding 1:America doesn't have a severe firearm homicide problem compared to other countries such as Brazil.
 ### Vox's Version
 ![](images/world_firearm_vox.jpg)
+
 Source: Vox, America's unique gun violence problem, explained in 17 maps and charts
 ### Deceptive Version
 ![](images/world_firearm_deceptive.png)
@@ -54,6 +55,7 @@ Vox's chart is claiming that the decrease of Australia's firearm suicides is bec
 ## Finding 3: Gun homicides have declined over the past couple decades, however, it could have little relationship with gun control policy but much related to abortion legalization.
 ### Vox's Version
 ![](images/firearm homicide deaths.png)
+
 Source: Vox, America's unique gun violence problem, explained in 17 maps and charts
 ### Deceptive Version
 ![](images/abortion.png)
