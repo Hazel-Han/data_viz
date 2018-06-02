@@ -143,11 +143,15 @@ write.csv(gun_combined, file = "gun_combined.csv")
 ## Finding 1: America doesn't have a severe firearm homicide problem compared to other countries such as Brazil.
 ### Vox's Version
 ![](images/world_firearm_vox.jpg)
+
 Source: Vox, America's unique gun violence problem, explained in 17 maps and charts
-### Deceptive Version
+### First Deceptive Version
 ![](images/world_firearm_deceptive.png)
-### Data Source
-UNODC & Small arms survey, Retrieved from https://www.theguardian.com/news/datablog/2012/jul/22/gun-homicides-ownership-world-list#data. 
+### Second Deceptive Version
+![](images/firearm_revised.png)
+### Reasoning
+The Vox's graph is cherry picking countries so as to make the point that US is having a severe firearm homicide issue. Using the same dataset and contrasting with more countries, it is noticed that US is actually on the lower end of firearm homicide rate. The argument model is being analyzed for this visual to draw an opposite conclusion. Note that we are only showing countries whose homicide by firearm rate are greater than 1. The biggest reason is to increase chart's readability. Further, the condition will not affect the conclusion as US is having the rate around 2, where the conclusion is trying to prove that US does not have a severe firearm homicide rate compared to other countries.Color red is being used for US because this is the country that we are interested in and it stood out in comparison and thus increased the data pixel ratio. In the revised version, x axis and y axis are switched because it is more readable for the audience. 
+
 ### Data Wrangling Steps
 ```{r}
 # Read File
@@ -157,16 +161,8 @@ selected_firearm <- subset(world_firearm, Homicide.by.firearm.rate.per.100.000.p
 # Draw Bar Chart
 library(ggplot2)
 firearm <- ggplot(selected_firearm, aes(x=reorder(Country.Territory, Homicide.by.firearm.rate.per.100.000.pop), y=Homicide.by.firearm.rate.per.100.000.pop, fill=reorder(Country.Territory, Homicide.by.firearm.rate.per.100.000.pop)))
-firearm + geom_bar(stat = "identity") + scale_fill_manual(values=c("#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#CC6666","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999"), guide=FALSE) +theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black")) + labs(x = "Country", y = "Homicides by firearm per 1 million people", title = "Homicides by firearm per 1 million people", subtitle = "with countries' rate greater than 1")+ coord_flip()
-
+firearm + geom_bar(stat = "identity") + scale_fill_manual(values=c("#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#CC6666","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999","#999999"), guide=FALSE) +theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black")) + labs(x = "Country", y = "Homicides by firearm per 1 million people", title = "Homicides by firearm per 1 million people", subtitle = "with countries' rate greater than 1", caption = "Source: UNODC & Small arms survey")+ coord_flip()
 ```
-### Reasoning
-The Vox's graph is cherry picking countries so as to make the point that US is having a severe firearm homicide issue. Using the same dataset with more countries, it is noticed that US is actually on the lower end of firearm homicide rate. Note that we are only showing countries whose homicide by firearm rate are greater than 1. The biggest reason is to increase chart's readability. Further, the condition will not affect the conclusion as US is having the rate around 2, where the conclusion is trying to prove that US does not have a severe firearm homicide rate compared to other countries.
-
-red, standing out, data pixel ratio
-switch y axis and x axis more readible to audience
-
-
 ## Finding 2: Rate of firearm suicides decrease, even before Australia's gun buyback program
 ### Vox's Version
 ![](images/australia.jpg)
@@ -175,7 +171,9 @@ Source: Vox, America's unique gun violence problem, explained in 17 maps and cha
 ![](images/suicide_australia.png)
 (Interactive Graph: https://public.tableau.com/profile/tianmin.li#!/vizhome/australia_3/Dashboard1)
 ### Data Source
-Australian Bureau of Statistics. Causes of Death. Retrieved from http://www.abs.gov.au/ausstats/abs@.nsf/ViewContent?readform&view=productsbytopic&Action=Expand&Num=5.7.14. 
+Australian Bureau of Statistics. Causes of Death. Retrieved from http://www.abs.gov.au/ausstats/abs@.nsf/ViewContent?readform&view=productsbytopic&Action=Expand&Num=5.7.14.
+### Reasoning
+Vox's chart is claiming that the decrease of Australia's firearm suicides is because of the gun buyback program. While the research that the article is referencing does show that the program is having a significant impact on decreasing firearm suicide, the conclusion is not reflected on the graph. The deceptive data product is adding a reference line to the original graph, and that shows that starting from 1987, Australia has been experiencing a drastic decline in firearm suicide, almost ten years before the program started. The red line being used in year 1987 is to draw audience attention to the drastic change since then and it is a good contrast to the blue line. Note that years prior to 1987 are presented as well so as to show a whole picture of how firearm suicide changes over time and avoid the doubt of cherry picking data. 
 ### Data Wrangling Steps
 ```{r}
 #read Data
@@ -190,18 +188,20 @@ australia <- subset(australia, Year > 1967)
 #export data for Tableau visualization
 write.csv(australia, file = "australia.csv")
 ```
-### Summary
-Vox's chart is claiming that the decrease of Australia's firearm suicides is because of the gun buyback program. While the research that the article is referencing does show that the program is having a significant impact on decreasing firearm suicide, the conclusion is not reflected on the graph. The deceptive data product is adding a reference line to the original graph, and that shows that starting from 1987, Australia has been experiencing a drastic decline in firearm suicide, almost ten years before the program started. 
 ## Finding 3: Gun homicides have declined over the past couple decades, however, it could have little relationship with gun control policy but much related to abortion legalization.
 ### Vox's Version
 ![](images/firearm_homicide_deaths.png)
 Source: Vox, America's unique gun violence problem, explained in 17 maps and charts
-### Deceptive Version
-![](images/abortion.png)
+### First Deceptive Version
 (Interactive Graph: https://public.tableau.com/profile/tianmin.li#!/vizhome/FirearmHomicideDeathsvs_AbortionRate/Dashboard1) 
-### Data Source
-1. Centers for Disease Control and Prevention. Fatal Injury Reports, National, Regional and State, 1981 – 2016. Retrieved from https://webappa.cdc.gov/sasweb/ncipc/mortrate.html. 
-2. Centers for Disease Control and Prevention. Abortion Surveillance Reports. Retrieved from https://www.cdc.gov/mmwr/preview/mmwrhtml/ss5713a1.htm. 
+![](images/abortion.png)
+
+### Second Deceptive Version
+(Interactive Graph: https://public.tableau.com/profile/tianmin.li#!/vizhome/FirearmHomicideDeathsvs_AbortionRate/Dashboard2)
+![](images/deceptive3.png)
+### Reasoning
+The original graph is showing the decreasing rate of firearm homicide deaths, with a guess that some policies might impact the decrease or the deterrence of gun. The deceptive version is comparing the firearm homicide deaths to corresponding abortion rate. This is based on Levitt’s (2005) theory that the drop of crime rate is the result of legalized abortion case Roe vs. Wade in 1973. It is argued that abortion helped teenager mothers, who are very likely to give birth to criminals because of their unstable economic and social situation, to stop pregnancy, and thus less criminals are produced. In the deceptive data product, the abortion year has been adjusted by adding 20 years to show when “criminals” are grown-ups. It is clear that as the abortion rate goes up, the firearm suicide rate is going down and it is very consistent over time. To make the argument more compelling, the period of Federal Assault Weapons Ban is also shaded in the chart, which shows that the policy doesn’t really help explain the decrease and increase of firearm suicide. 
+
 ### Data Wrangling Steps
 ```{r}
 # Read and Merge Data
@@ -217,8 +217,6 @@ firearm_abortion <- merge(firearm, abortion, by = "Year")
 #export csv file for Tableau visualization
 write.csv(firearm_abortion, file = "firearm_abortion.csv")
 ```
-### Summary
-The original graph is showing the decreasing rate of firearm homicide deaths, with a guess that some policies might impact the decrease or the deterrence of gun. The deceptive version is comparing the firearm homicide deaths to corresponding abortion rate. This is based on Levitt’s (2005) theory that the drop of crime rate is the result of legalized abortion case Roe vs. Wade in 1973. It is argued that abortion helped teenager mothers, who are very likely to give birth to criminals because of their unstable economic and social situation, to stop pregnancy, and thus less criminals are produced. In the deceptive data product, the abortion year has been adjusted by adding 20 years to show when “criminals” are grown-ups. It is clear that as the abortion rate goes up, the firearm suicide rate is going down and it is very consistent over time. To make the argument more compelling, the period of Federal Assault Weapons Ban is also shaded in the chart, which shows that the policy doesn’t really help explain the decrease and increase of firearm suicide. 
 ## Reference
 Ehrenfreund M. (2015). We've Had a Massive Decline in Gun Violence in the United States. Here's Why. Retrieved from https://www.washingtonpost.com/news/wonk/wp/2015/12/03/weve-had-a-massive-decline-in-gun-violence-in-the-united-states-heres-why/?utm_term=.189af8a0f2cd. 
 1. Levitt, S. D., & Dubner, S. J. (2005). Freakonomics: A rogue economist explores the hidden side of everything. New York: William Morrow.
