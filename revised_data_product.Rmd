@@ -6,6 +6,7 @@ Gun problem has been a controversial issue in US for a long time. Vox created a 
 ## Finding 1: Gun homicides (like all homicides) have declined over the past couple decades
 ### Vox Version
 ![](images/firearm_homicide_deaths.png)
+
 Source: Vox, America's unique gun violence problem, explained in 17 maps and charts
 ### First Revision
 ![](images/homcide_deaths.png)
@@ -14,7 +15,9 @@ Source: Vox, America's unique gun violence problem, explained in 17 maps and cha
 ![](images/homicide_revised.png)
 ### Reasoning
 The original graph demonstrates the rate of firearm deaths from 1981 to 2010. However, the chart doesn't really support the claim by simply showing the rate of firearm deaths. It was hard to draw conclusions about reasons behind the rate without comparing it to other death rates. Combining the argument model and analytic design, it is advised to show different causes of homicides in order to compare and contrast the differences among various types.
-In the first revised version, the rate of firearm homicide deaths is compared with violent-related deaths (including all homicide and suicide) and unintentional deaths. From the graph we can tell that it is not just the firearm deaths that's dropping but also the overall voilent-related deaths over years. This point is confirmed by Ehrenfreund (2015) that the drop in gun violence is part of the drop in overall voilent crime. 
+
+In the first revised version, the rate of firearm homicide deaths is compared with violent-related deaths (including all homicide and suicide) and unintentional deaths. From the graph we can tell that it is not just the firearm deaths that's dropping but also the overall violent-related deaths over years. This point is confirmed by Ehrenfreund (2015) that the drop in gun violence is part of the drop in overall voilent crime. 
+
 There are some improvements made in the second revision. Noticing a steep drop around 1999 for violence-related homicides, data source was revisited and the change of the way that homicides deaths were calculated was found. A more comparable-to-previous data source was used instead to avoid additional concern from the audience. Further, the grids that was automatically created by ggplot were cleared to increase data-pixel ratio. The three colors being used to represent different causes of death aim to contrast different categories and thus are necessary. The typo in the first version was corrected and the data source was added to the graph so more information that are appealing to the audience are presented.
 
 ### Data Wrangling Steps
@@ -48,10 +51,10 @@ ggplot(data=fatal_rate, aes(x=Year, y=Crude.Rate, group = Cause.of.Death, colour
 panel.background = element_blank(), axis.line = element_line(colour = "black")) + labs(title = 'Rate of Homicide and Unintentional Deaths, 1981-2010', y = 'Per 100,000 people', colour= 'Cause of death',caption = "Source: Centers for Disease Control and Prevention.Fatal Injury Reports, 1981 to 2016, National, Regional and State")
 ```
 ## Finding 2: There have been more than 1,600 mass shootings since Sandy Hook
-###Vox Version
+### Vox Version
 ![](images/mass_shootings_map.png)
-Source: Vox, America's unique gun violence problem, explained in 17 maps and charts
 
+Source: Vox, America's unique gun violence problem, explained in 17 maps and charts
 ### First Revision
 (Interactive Graph: https://public.tableau.com/profile/tianmin.li#!/vizhome/MassShootingData_0/massshooting) 
 
@@ -64,7 +67,9 @@ Source: Vox, America's unique gun violence problem, explained in 17 maps and cha
 
 ### Reasoning
 The Vox version is using a controversial way of preseting mass shooting data in US by showing information in a map. It is debatable on whether it is necessary to present such information on a map. The approach is recognized in this project because using map to present every single mass shooting is sending a strong message to the audience on how bad the situation is. Further, the distribution on the map looks more convincing that simply showing aggregating data in bar charts with detailed information on when the incident happened and casualty. For this reason, the revisions continue with the map approach. 
+
 While it is legit to use a map to convey the information, the Vox version is misleading because it is sending a message that in certain states such as California, mass shootings are more likely to happen. Looking at the places that have more mass shooting, it is actually very related to the population. Using the analytic design of contrasting, the population of the states and mass shooting are both displayed and there is a relationship between the two in the revised graph. 
+
 One big problem with the first revision is that the dots are covering some underneath population information because of the size and opacity. To tackle the problem. size of the dots are decrease the the colors look more transparent so the underneath information can come through. In addition, county population information is used instead of state and thus the relationship between population and mass shooting is even more clear. Color blue and red are chosen to represent population and mass shooting because the two colors contrast with each other well. Red represeting mass shooting will convey a stronger message to the audience. The legends are being adjusted as well since 5 million for a county can be already regarded as a populous county and similarly, 20 killings in a mass shooting is a severe one. Further, countries other than US are taken out from the map to increase data pixel ratio. Sources are also added for audiences' reference. 
 
 ### Data Wrangling Steps
@@ -88,10 +93,11 @@ Export data to csv for visualization in Tableau
 write.csv(mass_shoot, file = "mass_shoot.csv")
 write.csv(population, file = "population_2017.csv")
 ```
-## Finding 3: The tates with the most guns report the most suicides
+## Finding 3: The states with the most guns report the most suicides
 ### Vox Version
 ![](images/suicide.png)
 
+Source: Vox, America's unique gun violence problem, explained in 17 maps and charts
 ### First Revision
 (Interactive Graph: https://public.tableau.com/profile/tianmin.li#!/vizhome/gun_suicide/Dashboard1)
 
@@ -102,7 +108,7 @@ write.csv(population, file = "population_2017.csv")
 ![](images/revision3.png)
 
 ### Reasoning
-The Vox plot is not straight forward in terms of readiness and is not convincing. On the one hand, it is really hard to understand what the bars are showing and how to compare the four bars. Further, showing the highest/lowest gun ownership states are not convincing as these states can just be outliers or there might be a u-shape in the general trend so the conclusion is misleading. To tackle these two problems, all states' gun ownership vs. gun suicide rate are displayed in the revised plot. 
+The Vox plot is not straight forward in terms of readiness and is not convincing. On the one hand, it is really hard to understand what the bars are showing and how to compare the four bars. On the other hand, showing the highest/lowest gun ownership states are not convincing as these states can just be outliers or there might be a u-shape in the general trend so the conclusion is misleading. To tackle these two problems, all states' gun ownership vs. gun suicide rate are displayed in the revised plot to make the constrast clear (using analytic design). A trending line has been added to support the argument that more guns are associated with more suicides. In the revised version, colors of the dots have been changed to red because it draws more attention than the previous one. The grids were removed to increase data pixel ratio.
 
 ### Data Wrangling Steps
 Read and Clean Data
